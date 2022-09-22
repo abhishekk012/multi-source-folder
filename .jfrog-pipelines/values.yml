@@ -1,0 +1,5 @@
+ GitRepo:
+  name: myRepo
+  gitProvider: s_gitHub
+  branches:
+    include: master

@@ -1,24 +1,27 @@
-resources:
-  - name: myRepo
-    type: GITRepo
-    configuration:
-      path: deepikasl/jfrog_pipelines
-      gitProvider: deepikaGithub
-      branches:
-        include: master
+template: true   # required for local templates   
+valuesFilePath: ./values.yml # required for local templates. DO NOT SPECIFY for system level templates
 
-  - name: propertyBag
-    type: PropertyBag
-    configuration:
-      foo: bar
-      foo1: bar1
-      foo2: bar2
+# resources:
+#   - name: myRepo
+#     type: GITRepo
+#     configuration:
+#       path: deepikasl/jfrog_pipelines
+#       gitProvider: deepikaGithub
+#       branches:
+#         include: master
+
+#   - name: propertyBag
+#     type: PropertyBag
+#     configuration:
+#       foo: bar
+#       foo1: bar1
+#       foo2: bar2
 
 pipelines:
   - name: demo_manual
     configuration:
       integrations:
-        - name: deepikaGithub
+        - name: {{ .Values.GitRepo.gitProvider }}
     steps:
       - name: manual_trigger
         type: Bash
@@ -28,7 +31,7 @@ pipelines:
           outputResources:
             - name: propertyBag
           integrations:
-            - name: deepikaGithub
+            - name: s_gitHub
         execution:
           onExecute:
             - write_output propertyBag "foo=$run_number"
