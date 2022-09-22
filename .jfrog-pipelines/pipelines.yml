@@ -1,27 +1,27 @@
 template: true   # required for local templates   
 valuesFilePath: ./values.yml # required for local templates. DO NOT SPECIFY for system level templates
 
-resources:
-  - name: myRepo
-    type: GITRepo
-    configuration:
-      path: deepikasl/jfrog_pipelines
-      gitProvider: {{ .Values.GitRepo.gitProvider }}
-      branches:
-        include: master
+# resources:
+#   - name: myRepo
+#     type: GITRepo
+#     configuration:
+#       path: deepikasl/jfrog_pipelines
+#       gitProvider: {{ .Values.GitRepo.gitProvider }}
+#       branches:
+#         include: master
 
-  - name: propertyBag
-    type: PropertyBag
-    configuration:
-      foo: bar
-      foo1: bar1
-      foo2: bar2
+#   - name: propertyBag
+#     type: PropertyBag
+#     configuration:
+#       foo: bar
+#       foo1: bar1
+#       foo2: bar2
 
 pipelines:
   - name: demo_manual
     configuration:
       integrations:
-        - name: deepikaGithub
+        - name: {{ .Values.GitRepo.gitProvider }}
     steps:
       - name: manual_trigger
         type: Bash
